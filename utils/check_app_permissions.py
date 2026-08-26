@@ -45,7 +45,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--auth",
         choices=["pat", "app", "cli"],
-        help="Authentication method for GitHub API (default: pat)",
+        help="Authentication method for GitHub API (default: auto)",
     )
     args = parser.parse_args()
 
@@ -134,7 +134,7 @@ def write_all_apps_csv(installations: list[dict[str, Any]], output_path: str) ->
                     "installation_id": installation.get("id"),
                     "repository_selection": installation.get("repository_selection"),
                     "permissions": ", ".join(
-                        f"{scope}: {level}"
+                        f"{scope}:{level}"
                         for scope, level in sorted(permissions.items())
                     ),
                 }
@@ -148,7 +148,11 @@ def print_not_found(
 ) -> None:
     """Print a clear not-found message with the available app slugs."""
     print(f"No GitHub App with slug '{app_slug}' is installed in {org}.")
-    slugs = sorted(installation.get("app_slug") or "" for installation in installations)
+    slugs = sorted(
+        installation.get("app_slug")
+        for installation in installations
+        if installation.get("app_slug")
+    )
     print(f"Installed apps in {org} ({len(slugs)}):")
     for slug in slugs:
         print(f"- {slug}")
