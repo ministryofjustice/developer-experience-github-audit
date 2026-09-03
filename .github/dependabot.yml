@@ -7,56 +7,88 @@
 version: 2
 
 updates:
-  - package-ecosystem: "bundler"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: ":dependabot: BUNDLER"
-      include: "scope"
-  - package-ecosystem: "terraform"
-    directory: "/terraform"
-    schedule:
-      interval: "daily"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+    cooldown:
+      default-days: 14
     commit-message:
-      prefix: ":dependabot: GitHub Actions"
+      prefix: ":dependabot: github-actions"
       include: "scope"
+    groups:
+      github-actions-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+    cooldown:
+      default-days: 14
     commit-message:
-      prefix: ":dependabot: PIP"
+      prefix: ":dependabot: pip"
       include: "scope"
+    groups:
+      pip-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+    cooldown:
+      default-days: 14
     commit-message:
-      prefix: ":dependabot: NPM"
+      prefix: ":dependabot: npm"
       include: "scope"
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: ":dependabot: GOMOD"
-      include: "scope"
+    groups:
+      npm-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
   - package-ecosystem: "docker"
-    directory: "/"
+    directory: "/docker-audit-cli"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+    cooldown:
+      default-days: 14
     commit-message:
-      prefix: ":dependabot: Dockerfile"
+      prefix: ":dependabot: docker"
       include: "scope"
+    groups:
+      docker-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
+    cooldown:
+      default-days: 14
     commit-message:
-      prefix: ":dependabot: Devcontainer"
+      prefix: ":dependabot: devcontainers"
       include: "scope"
+    groups:
+      devcontainers-minor-patch:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
