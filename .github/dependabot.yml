@@ -3,92 +3,57 @@
 # package ecosystems to update and where the package manifests are located.
 # Please see the documentation for all configuration options:
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# Ecosystems below are limited to the manifests that actually exist in this
+# repo (package.json, Dockerfile, .github/workflows) so every update is
+# tracked through a structured package manager rather than ad-hoc scripts.
+#
+# schedule.interval: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#scheduleinterval
+# groups: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups
+# cooldown: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown
 
 version: 2
 
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    cooldown:
-      default-days: 14
-    commit-message:
-      prefix: ":dependabot: github-actions"
-      include: "scope"
-    groups:
-      github-actions-minor-patch:
-        applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "monthly"
-    cooldown:
-      default-days: 14
-    commit-message:
-      prefix: ":dependabot: pip"
-      include: "scope"
-    groups:
-      pip-minor-patch:
-        applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
   - package-ecosystem: "npm"
+    commit-message:
+      include: "scope"
+      prefix: ":dependabot: npm"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     cooldown:
-      default-days: 14
-    commit-message:
-      prefix: ":dependabot: npm"
-      include: "scope"
+      # wait 7 days after release before proposing routine updates
+      default-days: 7
     groups:
-      npm-minor-patch:
-        applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+      # bundle all non-major bumps into a single PR instead of one-per-package
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "docker"
+    commit-message:
+      include: "scope"
+      prefix: ":dependabot: docker"
     directory: "/docker-audit-cli"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     cooldown:
-      default-days: 14
-    commit-message:
-      prefix: ":dependabot: docker"
-      include: "scope"
+      # wait 7 days after release before proposing routine updates
+      default-days: 7
     groups:
-      docker-minor-patch:
-        applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-  - package-ecosystem: "devcontainers"
+      # bundle all non-major bumps into a single PR instead of one-per-package
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+  - package-ecosystem: "github-actions"
+    commit-message:
+      include: "scope"
+      prefix: ":dependabot: github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "daily"
     cooldown:
-      default-days: 14
-    commit-message:
-      prefix: ":dependabot: devcontainers"
-      include: "scope"
+      # wait 7 days after release before proposing routine updates
+      default-days: 7
     groups:
-      devcontainers-minor-patch:
-        applies-to: version-updates
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
+      # bundle all non-major bumps into a single PR instead of one-per-package
+      minor-and-patch:
+        update-types: ["minor", "patch"]
