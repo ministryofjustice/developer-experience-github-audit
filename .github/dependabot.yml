@@ -3,60 +3,57 @@
 # package ecosystems to update and where the package manifests are located.
 # Please see the documentation for all configuration options:
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+#
+# Ecosystems below are limited to the manifests that actually exist in this
+# repo (package.json, Dockerfile, .github/workflows) so every update is
+# tracked through a structured package manager rather than ad-hoc scripts.
+#
+# schedule.interval: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#scheduleinterval
+# groups: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups
+# cooldown: https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#cooldown
 
 version: 2
 
 updates:
-  - package-ecosystem: "bundler"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: ":dependabot: BUNDLER"
-      include: "scope"
-  - package-ecosystem: "terraform"
-    directory: "/terraform"
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: ":dependabot: GitHub Actions"
-      include: "scope"
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: ":dependabot: PIP"
-      include: "scope"
   - package-ecosystem: "npm"
+    commit-message:
+      include: "scope"
+      prefix: ":dependabot: npm"
     directory: "/"
     schedule:
       interval: "daily"
-    commit-message:
-      prefix: ":dependabot: NPM"
-      include: "scope"
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: ":dependabot: GOMOD"
-      include: "scope"
+    cooldown:
+      # wait 7 days after release before proposing routine updates
+      default-days: 7
+    groups:
+      # bundle all non-major bumps into a single PR instead of one-per-package
+      minor-and-patch:
+        update-types: ["minor", "patch"]
   - package-ecosystem: "docker"
+    commit-message:
+      include: "scope"
+      prefix: ":dependabot: docker"
+    directory: "/docker-audit-cli"
+    schedule:
+      interval: "daily"
+    cooldown:
+      # wait 7 days after release before proposing routine updates
+      default-days: 7
+    groups:
+      # bundle all non-major bumps into a single PR instead of one-per-package
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+  - package-ecosystem: "github-actions"
+    commit-message:
+      include: "scope"
+      prefix: ":dependabot: github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-    commit-message:
-      prefix: ":dependabot: Dockerfile"
-      include: "scope"
-  - package-ecosystem: "devcontainers"
-    directory: "/"
-    schedule:
-      interval: "daily"
-    commit-message:
-      prefix: ":dependabot: Devcontainer"
-      include: "scope"
+    cooldown:
+      # wait 7 days after release before proposing routine updates
+      default-days: 7
+    groups:
+      # bundle all non-major bumps into a single PR instead of one-per-package
+      minor-and-patch:
+        update-types: ["minor", "patch"]
