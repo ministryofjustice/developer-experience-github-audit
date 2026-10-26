@@ -1,6 +1,6 @@
 # Repository Audit Tool
 
-[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/moj-github-discovery/badge)](https://github-community.service.justice.gov.uk/repository-standards/moj-github-discovery)
+[![Ministry of Justice Repository Compliance Badge](https://github-community.service.justice.gov.uk/repository-standards/api/developer-experience-github-audit/badge)](https://github-community.service.justice.gov.uk/repository-standards/developer-experience-github-audit)
 
 A comprehensive Python toolset for auditing GitHub repositories across organizations. Analyzes:
 
